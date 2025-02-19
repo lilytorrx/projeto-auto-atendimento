@@ -30,7 +30,7 @@ model Restaurante {
 model categoriaMenu {
   id            String      @id @default(uuid())
   nome          String
-  restaurante   Restaurante @relation(fields: [idRestaurante], references: [id])
+  restaurante   Restaurante @relation(fields: [idRestaurante], references: [id], onDelete: Cascade)
   idRestaurante String
   produtos      Produto[]
   criadoEm      DateTime    @default(now())
@@ -46,8 +46,8 @@ model Produto {
   idCategoriaMenu String
   ingredientes    String[]
   pedidoProdutos  pedidoProdutos[]
-  restaurante     Restaurante      @relation(fields: [idRestaurante], references: [id])
-  categoriaMenu   categoriaMenu    @relation(fields: [idCategoriaMenu], references: [id])
+  restaurante     Restaurante      @relation(fields: [idRestaurante], references: [id], onDelete: Cascade)
+  categoriaMenu   categoriaMenu    @relation(fields: [idCategoriaMenu], references: [id], onDelete: Cascade)
   urlImagem       String
   criadoEm        DateTime         @default(now())
   atualizadoEm    DateTime         @updatedAt
@@ -57,7 +57,7 @@ model Pedido {
   id             Int              @id @default(autoincrement())
   total          Float
   idRestaurante  String
-  restaurante    Restaurante      @relation(fields: [idRestaurante], references: [id])
+  restaurante    Restaurante      @relation(fields: [idRestaurante], references: [id], onDelete: Cascade)
   statusPedido   Status
   metodoConsumo  Metodo
   pedidoProdutos pedidoProdutos[]
@@ -65,9 +65,9 @@ model Pedido {
 
 model pedidoProdutos {
   id           String   @id @default(uuid())
-  produto      Produto  @relation(fields: [idProduto], references: [id])
+  produto      Produto  @relation(fields: [idProduto], references: [id], onDelete: Cascade)
   idProduto    String
-  pedido       Pedido   @relation(fields: [idPedido], references: [id])
+  pedido       Pedido   @relation(fields: [idPedido], references: [id], onDelete: Cascade)
   idPedido     Int
   quantidade   Int
   preco        Float
