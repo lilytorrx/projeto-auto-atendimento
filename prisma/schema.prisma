@@ -13,66 +13,65 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Restaurante {
-  id String @id @default(uuid())
-  nome String
-  slug String
-  descricao String
-  imagemAvatarURL String
-  capaImagemAvatarURL String 
-  produtos Produto[]
-  pedidos Pedido[]
-  categoriasMenu categoriaMenu[]
-  criadoEm DateTime @default(now())
-  atualizadoEm DateTime @updatedAt
+  id                  String          @id @default(uuid())
+  nome                String
+  slug                String
+  descricao           String
+  imagemAvatarURL     String
+  capaImagemAvatarURL String
+  produtos            Produto[]
+  pedidos             Pedido[]
+  categoriasMenu      categoriaMenu[]
+  criadoEm            DateTime        @default(now())
+  atualizadoEm        DateTime        @updatedAt
 }
 
 model categoriaMenu {
-  id String @id @default(uuid())
-  nome String
-  restaurante Restaurante @relation(fields: [idRestaurante], references: [id])
+  id            String      @id @default(uuid())
+  nome          String
+  restaurante   Restaurante @relation(fields: [idRestaurante], references: [id])
   idRestaurante String
-  produtos Produto[]
-  criadoEm DateTime @default(now())
-  atualizadoEm DateTime @updatedAt
+  produtos      Produto[]
+  criadoEm      DateTime    @default(now())
+  atualizadoEm  DateTime    @updatedAt
 }
 
 model Produto {
-  id String @id @default(uuid())
-  nome String
-  descricao String
-  preco Float
-  idRestaurante String
+  id              String           @id @default(uuid())
+  nome            String
+  descricao       String
+  preco           Float
+  idRestaurante   String
   idCategoriaMenu String
-  ingredientes String[]
-  pedidoProdutos pedidoProdutos[]
-  restaurante Restaurante @relation(fields: [idRestaurante], references: [id])
-  categoriaMenu categoriaMenu @relation(fields: [idCategoriaMenu], references: [id])
-  urlImagem String
-  criadoEm DateTime @default(now())
-  atualizadoEm DateTime @updatedAt
+  ingredientes    String[]
+  pedidoProdutos  pedidoProdutos[]
+  restaurante     Restaurante      @relation(fields: [idRestaurante], references: [id])
+  categoriaMenu   categoriaMenu    @relation(fields: [idCategoriaMenu], references: [id])
+  urlImagem       String
+  criadoEm        DateTime         @default(now())
+  atualizadoEm    DateTime         @updatedAt
 }
 
 model Pedido {
-  id Int @id @default(autoincrement())
-  total Float
-  idRestaurante String
-  restaurante Restaurante @relation(fields: [idRestaurante], references: [id])
-  statusPedido Status
-  metodoConsumo Metodo
+  id             Int              @id @default(autoincrement())
+  total          Float
+  idRestaurante  String
+  restaurante    Restaurante      @relation(fields: [idRestaurante], references: [id])
+  statusPedido   Status
+  metodoConsumo  Metodo
   pedidoProdutos pedidoProdutos[]
 }
 
 model pedidoProdutos {
-  id String @id @default(uuid())
-  produto Produto @relation(fields: [idProduto], references: [id])
-  idProduto String
-  pedido Pedido @relation(fields: [idPedido], references: [id])
-  idPedido Int
-  quantidade Int
-  preco Float
-  criadoEm DateTime @default(now())
+  id           String   @id @default(uuid())
+  produto      Produto  @relation(fields: [idProduto], references: [id])
+  idProduto    String
+  pedido       Pedido   @relation(fields: [idPedido], references: [id])
+  idPedido     Int
+  quantidade   Int
+  preco        Float
+  criadoEm     DateTime @default(now())
   atualizadoEm DateTime @updatedAt
 }
 
