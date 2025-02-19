@@ -22,6 +22,7 @@ model Restaurante {
   imagemAvatarURL String
   capaImagemAvatarURL String 
   produtos Produto[]
+  pedidos Pedido[]
   categoriasMenu categoriaMenu[]
   criadoEm DateTime @default(now())
   atualizadoEm DateTime @updatedAt
@@ -42,12 +43,45 @@ model Produto {
   nome String
   descricao String
   preco Float
-  ingredientes String[]
   idRestaurante String
   idCategoriaMenu String
+  ingredientes String[]
+  pedidoProdutos pedidoProdutos[]
   restaurante Restaurante @relation(fields: [idRestaurante], references: [id])
   categoriaMenu categoriaMenu @relation(fields: [idCategoriaMenu], references: [id])
   urlImagem String
   criadoEm DateTime @default(now())
   atualizadoEm DateTime @updatedAt
+}
+
+model Pedido {
+  id Int @id @default(autoincrement())
+  total Float
+  idRestaurante Restaurante @relation(fields: [idRestaurante], references: [id])
+  statusPedido Status
+  metodoConsumo Metodo
+  pedidoProdutos pedidoProdutos[]
+}
+
+model pedidoProdutos {
+  id String @id @default(uuid())
+  produto Produto @relation(fields: [idProduto], references: [id])
+  idProduto String
+  pedido Pedido @relation(fields: [idPedido], references: [id])
+  idPedido Int
+  quantidade Int
+  preco Float
+  criadoEm DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+}
+
+enum Status {
+  PENDING
+  IN_PREPARATION
+  FINISHED
+}
+
+enum Metodo {
+  TAKEAWAY
+  DINE_IN
 }
