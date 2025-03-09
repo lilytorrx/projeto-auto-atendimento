@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { getRestaurantBySlug } from "@/data/get-restaurant-by-slug";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import ConsumptionMethodOption from "./components/consumption-method-option";
 interface RestaurantPageProps {
     params: Promise<{slug: string}>;
 }
@@ -34,15 +35,21 @@ const RestaurantPage = async ({params}: RestaurantPageProps) => {
                     Escolha como prefere aproveitar sua refeição. Estamos oferecendo praticidade, segurança e sabor em cada detalhe para você!
                 </p>
             </div>
-            <div className="pt-14 grid grid-cols-2">
-                <Card>
-                    <CardContent className="flex flex-col items-center gap-8 py-8">
-                        <Button variant="secondary" classname="rounded-full">
-                            Para comer aqui
-                        </Button> 
-                    </CardContent>
-
-                </Card>
+            <div className="pt-14 grid grid-cols-2 gap-4">
+                <ConsumptionMethodOption
+                    slug={slug}
+                    option="DINE_IN"
+                    buttonText="Para comer aqui"
+                    alt="Comer aqui"
+                    imageUrl="/dine_in.png"
+                />
+                <ConsumptionMethodOption
+                    slug={slug}
+                    option="TAKEAWAY"
+                    buttonText="Para levar"
+                    alt="Levar"
+                    imageUrl="/takeaway.png"
+                />
             </div>
         </div>
     );
